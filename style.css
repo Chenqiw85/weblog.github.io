@@ -1,0 +1,129 @@
+/* ── FLIP CARDS ── */
+.flip-card {
+  position: relative;
+  width: 560px;
+  height: 380px;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid var(--bd);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.flip-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+
+/* 扩散圆 */
+.flip-circle {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.flip-circle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #0e0e1e;
+  clip-path: circle(0px at 38% center);
+  transition: clip-path 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 20px;
+}
+.flip-card:hover .flip-circle::before {
+  clip-path: circle(800px at 38% center);
+}
+
+/* 左侧内容区 */
+.flip-content {
+  position: absolute;
+  z-index: 2;
+  top: 0; left: 0; bottom: 0;
+  width: 52%;
+  padding: 32px 24px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.35s ease 0.25s, transform 0.35s ease 0.25s;
+  pointer-events: none;
+}
+.flip-card:hover .flip-content {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+.flip-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.flip-card[data-theme="blue"]  .flip-tag { color: var(--blue); }
+.flip-card[data-theme="purple"] .flip-tag { color: #a78bfa; }
+
+.flip-content h3 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+  color: var(--tx);
+}
+.flip-content p {
+  font-size: 12.5px;
+  color: var(--mu);
+  line-height: 1.7;
+}
+.flip-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 2px;
+}
+.flip-stack span {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.04);
+}
+.flip-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--red);
+  letter-spacing: 1px;
+  margin-top: 4px;
+  transition: color 0.2s;
+  display: inline-block;
+}
+.flip-link:hover { color: #fff; }
+
+/* 右侧封面视觉 */
+.flip-visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  left: 0;
+}
+.flip-card:hover .flip-visual {
+  left: 48%;
+  width: 60%;
+}
+
+/* hover 后封面缩放效果 */
+.flip-visual .pm,
+.flip-visual canvas {
+  transition: transform 0.5s ease;
+}
+.flip-card:hover .flip-visual .pm.m {
+  transform: scale(1.08) translateY(-8px) !important;
+}
